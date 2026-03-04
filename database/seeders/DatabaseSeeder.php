@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => env('SEEDER_USER_NAME'),
             'email' => env('SEEDER_USER_EMAIL'),
             'password' => env('SEEDER_USER_PASSWORD'),
+            'role' => env('SEEDER_USER_ROLE'),
         ]);
     }
 }
