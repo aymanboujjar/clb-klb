@@ -5,7 +5,17 @@ import TransText from '@/components/TransText';
 const navLinks = [
     { key: 'home', href: '/', hasDropdown: false, fr: 'ACCUEIL', ar: 'الرئيسية', nl: 'HOME' },
     { key: 'about', href: '/a-propos', hasDropdown: false, fr: 'À PROPOS', ar: 'عنا', nl: 'OVER ONS' },
-    { key: 'news', href: '#', hasDropdown: true, fr: 'ACTUALITÉS', ar: 'أخبار', nl: 'NIEUWS' },
+    {
+        key: 'news',
+        hasDropdown: true,
+        fr: 'ACTUALITÉS',
+        ar: 'أخبار',
+        nl: 'NIEUWS',
+        items: [
+            { key: 'events', href: '/events', fr: 'Événements', ar: 'فعاليات', nl: 'Evenementen' },
+            { key: 'blogs', href: '/blogs', fr: 'Blog', ar: 'مدونة', nl: 'Blog' },
+        ],
+    },
     { key: 'contact', href: '/contact', hasDropdown: false, fr: 'CONTACT', ar: 'اتصل', nl: 'CONTACT' },
 ];
 
@@ -19,11 +29,14 @@ export default function Navbar() {
     const { props } = usePage();
     const locale = props.locale && ['fr', 'ar', 'nl'].includes(props.locale) ? props.locale : 'fr';
     const [open, setOpen] = useState(false);
+    const [newsDropdownOpen, setNewsDropdownOpen] = useState(false);
     const ref = useRef(null);
+    const newsRef = useRef(null);
 
     useEffect(() => {
         function handleClickOutside(e) {
             if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+            if (newsRef.current && !newsRef.current.contains(e.target)) setNewsDropdownOpen(false);
         }
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -46,7 +59,47 @@ export default function Navbar() {
                 </Link>
 
                 <ul className="hidden items-center gap-8 md:flex">
-                    {navLinks.map(({ key, href, hasDropdown, fr, ar, nl }) => {
+                    {navLinks.map((item) => {
+                        const { key, hasDropdown, fr, ar, nl } = item;
+                        const href = item.href;
+                        if (hasDropdown && item.items) {
+                            const isActive = item.items.some((i) => window.location.pathname.startsWith(i.href));
+                            return (
+                                <li key={key} className="relative flex items-center gap-1" ref={key === 'news' ? newsRef : undefined}>
+                                    <button
+                                        type="button"
+                                        onClick={() => setNewsDropdownOpen((v) => !v)}
+                                        className={`flex items-center gap-1 text-sm font-medium text-cl-black transition hover:opacity-90 ${isActive ? 'underline underline-offset-4' : ''}`}
+                                        aria-expanded={newsDropdownOpen}
+                                        aria-haspopup="true"
+                                    >
+                                        <TransText fr={fr} ar={ar} nl={nl} as="span" />
+                                        <svg className="h-4 w-4 text-cl-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                    {newsDropdownOpen && (
+                                        <ul
+                                            className="absolute start-0 top-full z-50 mt-1 min-w-40 rounded-lg border border-border bg-card py-1 shadow-md"
+                                            role="menu"
+                                        >
+                                            {item.items.map(({ key: itemKey, href: itemHref, fr: itemFr, ar: itemAr, nl: itemNl }) => (
+                                                <li key={itemKey} role="none">
+                                                    <Link
+                                                        href={itemHref}
+                                                        role="menuitem"
+                                                        className="block px-4 py-2 text-start text-sm text-foreground transition hover:bg-muted"
+                                                        onClick={() => setNewsDropdownOpen(false)}
+                                                    >
+                                                        <TransText fr={itemFr} ar={itemAr} nl={itemNl} as="span" />
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </li>
+                            );
+                        }
                         const path = href === '/' ? '/' : href;
                         const isActive = path !== '/' ? window.location.pathname.startsWith(path) : window.location.pathname === '/';
                         return (
@@ -57,11 +110,6 @@ export default function Navbar() {
                                 >
                                     <TransText fr={fr} ar={ar} nl={nl} as="span" />
                                 </Link>
-                                {hasDropdown && (
-                                    <svg className="h-4 w-4 text-cl-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                )}
                             </li>
                         );
                     })}
