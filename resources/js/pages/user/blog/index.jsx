@@ -7,7 +7,7 @@ import BlogCard from './Partials/BlogCard';
 import Pagination from './Partials/Pagination';
 
 export default function BlogIndex() {
-    const { posts = [], categories = [], currentCategory = 'tout', pagination } = usePage().props;
+    const { blogs = [], categories = [], currentCategory = 'tout', pagination } = usePage().props;
 
     return (
         <>
@@ -32,8 +32,8 @@ export default function BlogIndex() {
             <CategoryFilters categories={categories} currentCategory={currentCategory} />
             <div className="mx-auto max-w-6xl px-4 pb-8">
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {posts.map((post) => (
-                        <BlogCard key={post.id} post={post} />
+                    {blogs.map((blog) => (
+                        <BlogCard key={blog.id} blog={blog} />
                     ))}
                 </div>
                 <Pagination pagination={pagination} />

@@ -2,7 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
 
-export default function AdminBlogIndex({ posts = [], categories = [] }) {
+export default function AdminBlogIndex({ blogs = [], categories = [] }) {
     return (
         <>
             <AppLayout>
@@ -15,31 +15,31 @@ export default function AdminBlogIndex({ posts = [], categories = [] }) {
                         </Button>
                     </div>
 
-                    {posts.length === 0 ? (
+                    {blogs.length === 0 ? (
                         <p className="text-muted-foreground">Aucun article. Créez-en un.</p>
                     ) : (
                         <ul className="space-y-3">
-                            {posts.map((post) => (
+                            {blogs.map((blog) => (
                                 <li
-                                    key={post.id}
+                                    key={blog.id}
                                     className="flex items-center gap-4 rounded-lg border border-border bg-card p-4"
                                 >
-                                    {post.image && (
+                                    {blog.image && (
                                         <img
-                                            src={post.image}
+                                            src={blog.image}
                                             alt=""
                                             className="h-14 w-20 rounded object-cover"
                                         />
                                     )}
                                     <div className="min-w-0 flex-1">
-                                        <p className="font-medium truncate">{post.title_fr || 'Sans titre'}</p>
+                                        <p className="font-medium truncate">{blog.title_fr || 'Sans titre'}</p>
                                         <p className="text-muted-foreground text-sm">
-                                            {categories.find((c) => c.slug === post.category_slug)?.label_fr ?? post.category_slug}
+                                            {categories.find((c) => c.slug === blog.category_slug)?.label_fr ?? blog.category_slug}
                                         </p>
                                     </div>
                                     <div className="flex gap-2">
                                         <Button variant="outline" size="sm" asChild>
-                                            <Link href={`/admin/blogs/${post.id}/edit`}>Modifier</Link>
+                                            <Link href={`/admin/blogs/${blog.id}/edit`}>Modifier</Link>
                                         </Button>
                                     </div>
                                 </li>

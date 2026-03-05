@@ -2,13 +2,13 @@ import { Link } from '@inertiajs/react';
 import TransText from '@/components/TransText';
 
 /**
- * Single blog post card: image, category tag, date • author, title, excerpt, "Lire l'article" link.
+ * Single blog card: image, category tag, date, title, excerpt, "Lire l'article" link.
  * Uses project semantic colors (alpha, foreground, muted-foreground).
  *
- * @param {{ post: { id: number, title: string, excerpt: string, category: string, image_url: string, published_at: string, author: string, url: string } }} props
+ * @param {{ blog: { id: number, title: string, excerpt: string, category: string, image_url: string, published_at: string, url: string } }} props
  */
-export default function BlogCard({ post }) {
-    const { title, excerpt, category, image_url, published_at, url } = post;
+export default function BlogCard({ blog }) {
+    const { title, excerpt, category, image_url, published_at, url } = blog;
 
     return (
         <article className="flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-sm transition hover:shadow-md">

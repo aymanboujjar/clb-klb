@@ -12,11 +12,11 @@ const LANGS = [
 ];
 
 /**
- * Shared form for create/edit post. Uses Inertia useForm.
+ * Shared form for create/edit blog. Uses Inertia useForm.
  * formData: { category_slug, image?, title: { fr, ar, nl }, description: { fr, ar, nl }, body: { fr, ar, nl }, published_at }
  */
-export default function PostForm({
-    post = null,
+export default function BlogForm({
+    blog = null,
     categories = [],
     submitRoute,
     submitMethod = 'post',
@@ -24,17 +24,17 @@ export default function PostForm({
 }) {
     const [activeTab, setActiveTab] = useState('fr');
 
-    const initialTitle = post?.title ?? { fr: '', ar: '', nl: '' };
-    const initialDescription = post?.description ?? { fr: '', ar: '', nl: '' };
-    const initialBody = post?.body ?? { fr: '', ar: '', nl: '' };
+    const initialTitle = blog?.title ?? { fr: '', ar: '', nl: '' };
+    const initialDescription = blog?.description ?? { fr: '', ar: '', nl: '' };
+    const initialBody = blog?.body ?? { fr: '', ar: '', nl: '' };
 
     const { data, setData, post: postMethod, put, processing, errors } = useForm({
-        category_slug: post?.category_slug ?? 'evenements',
+        category_slug: blog?.category_slug ?? 'evenements',
         image: null,
         title: { ...initialTitle },
         description: { ...initialDescription },
         body: { ...initialBody },
-        published_at: post?.published_at ?? '',
+        published_at: blog?.published_at ?? '',
     });
 
     const handleSubmit = (e) => {
@@ -67,9 +67,9 @@ export default function PostForm({
 
             <div>
                 <Label>Image</Label>
-                {post?.image && (
+                {blog?.image && (
                     <img
-                        src={post.image}
+                        src={blog.image}
                         alt=""
                         className="mt-1 h-24 rounded border object-cover"
                     />

@@ -5,12 +5,12 @@ import TransText from '@/components/TransText';
 /**
  * Single blog post detail page. Uses AppLayout; content only (no Navbar/Footer here).
  */
-export default function BlogPostShow({ post }) {
-    if (!post) {
+export default function BlogPostShow({ blog }) {
+    if (!blog) {
         return null;
     }
 
-    const { title, excerpt, body, category, image_url, published_at } = post;
+    const { title, excerpt, body, category, image_url, published_at } = blog;
 
     return (
         <>
