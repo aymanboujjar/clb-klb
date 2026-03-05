@@ -10,7 +10,7 @@ export default function BlogPostShow({ post }) {
         return null;
     }
 
-    const { title, excerpt, category, image_url, published_at, author, url } = post;
+    const { title, excerpt, body, category, image_url, published_at } = post;
 
     return (
         <>
@@ -26,9 +26,11 @@ export default function BlogPostShow({ post }) {
                     <span className="rounded bg-alpha/10 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-alpha">
                         {category}
                     </span>
-                    <p className="mt-3 text-sm text-muted-foreground">
-                        {published_at} • {author}
-                    </p>
+                    {published_at && (
+                        <p className="mt-3 text-sm text-muted-foreground">
+                            {published_at}
+                        </p>
+                    )}
                     <h1 className="mt-2 text-3xl font-bold text-foreground sm:text-4xl">
                         {title}
                     </h1>
@@ -38,9 +40,15 @@ export default function BlogPostShow({ post }) {
                         <img src={image_url} alt="" className="h-full w-full object-cover" />
                     </div>
                 )}
-                <div className="prose prose-foreground mt-8 max-w-none">
-                    <p className="text-muted-foreground">{excerpt}</p>
-                </div>
+                {excerpt && (
+                    <p className="mt-6 text-muted-foreground">{excerpt}</p>
+                )}
+                {body && (
+                    <div
+                        className="prose prose-foreground mt-6 max-w-none"
+                        dangerouslySetInnerHTML={{ __html: body }}
+                    />
+                )}
             </article>
         </>
     );

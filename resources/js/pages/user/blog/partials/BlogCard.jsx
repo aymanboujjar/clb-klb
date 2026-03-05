@@ -8,7 +8,7 @@ import TransText from '@/components/TransText';
  * @param {{ post: { id: number, title: string, excerpt: string, category: string, image_url: string, published_at: string, author: string, url: string } }} props
  */
 export default function BlogCard({ post }) {
-    const { title, excerpt, category, image_url, published_at, author, url } = post;
+    const { title, excerpt, category, image_url, published_at, url } = post;
 
     return (
         <article className="flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-sm transition hover:shadow-md">
@@ -25,9 +25,11 @@ export default function BlogCard({ post }) {
                 </span>
             </div>
             <div className="flex flex-1 flex-col p-4 sm:p-5">
-                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground sm:text-sm">
-                    {published_at} • {author}
-                </p>
+                {published_at && (
+                    <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground sm:text-sm">
+                        {published_at}
+                    </p>
+                )}
                 <h2 className="mt-2 line-clamp-2 text-lg font-bold text-foreground sm:text-xl">
                     {title}
                 </h2>

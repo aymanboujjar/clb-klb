@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -18,48 +17,41 @@ class BlogController extends Controller
         ['slug' => 'culture', 'label' => 'Culture'],
     ];
 
-    /**
-     * Mock blog posts for the listing page. Replace with Post::query() when a Post model exists.
-     *
-     * @return array<int, array{id: int, title: string, excerpt: string, category: string, category_slug: string, image_url: string, published_at: string, author: string, url: string}>
-     */
-    private static function mockPosts(): array
+    private function locale(): string
     {
-        $categories = [
-            ['label' => 'Événements', 'slug' => 'evenements'],
-            ['label' => 'Culture', 'slug' => 'culture'],
-            ['label' => 'Coopération', 'slug' => 'cooperation'],
-            ['label' => 'Portraits', 'slug' => 'portraits'],
-        ];
+        $locale = app()->getLocale();
+        return in_array($locale, ['fr', 'ar', 'nl'], true) ? $locale : 'fr';
+    }
 
-        $titles = [
-            "Flor-Débat Avec Dr Younes Sekkouri: Leadership Féminin, Réalités Et Défis.",
-            "Rencontre annuelle du Cercle des Lauréats 2026.",
-            "Partenariat CLB-KLB et l'Ambassade de Belgique au Maroc.",
-            "Portrait: Mahdi Rouzane, de l'enseignement belge à l'excellence.",
-            "Culture et éducation: les ponts entre la Belgique et le Maroc.",
-            "Événement spécial: soirée des lauréats à Rabat.",
-            "Coopération universitaire: perspectives 2026.",
-            "Portrait: Une lauréate au service de l'innovation.",
-        ];
+    /**
+     * Build a single post payload for the frontend (listing or show) with translated fields.
+     */
+    private function postToArray(Post $post): array
+    {
+        $locale = $this->locale();
+        $imageUrl = $post->image ? asset('storage/' . $post->image) : null;
 
-        $posts = [];
-        foreach (array_values($titles) as $i => $title) {
-            $cat = $categories[$i % count($categories)];
-            $posts[] = [
-                'id' => $i + 1,
-                'title' => $title,
-                'excerpt' => "Ici, nous explorons les réussites exceptionnelles qui font la fierté de notre nation. Que vous soyez membre du CLB, aspirant lauréat ou simplement curieux, ce blog est votre passeport pour découvrir les histoires inspirantes.",
-                'category' => $cat['label'],
-                'category_slug' => $cat['slug'],
-                'image_url' => 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop',
-                'published_at' => '6 MARS 2026',
-                'author' => 'MAHDI ROUZANE',
-                'url' => '/blogs/' . ($i + 1),
-            ];
+        return [
+            'id' => $post->id,
+            'title' => $post->getTranslation('title', $locale),
+            'excerpt' => $post->getTranslation('description', $locale),
+            'body' => $post->getTranslation('body', $locale),
+            'category' => $this->categoryLabel($post->category_slug),
+            'category_slug' => $post->category_slug,
+            'image_url' => $imageUrl,
+            'published_at' => $post->published_at?->translatedFormat('j F Y'),
+            'url' => '/blogs/' . $post->id,
+        ];
+    }
+
+    private function categoryLabel(string $slug): string
+    {
+        foreach (self::CATEGORIES as $c) {
+            if ($c['slug'] === $slug) {
+                return $c['label'];
+            }
         }
-
-        return $posts;
+        return $slug;
     }
 
     /**
@@ -69,41 +61,40 @@ class BlogController extends Controller
     {
         $categorySlug = $request->query('category', 'tout');
         $perPage = 6;
-        $all = collect(self::mockPosts());
+        $locale = $this->locale();
 
-        $filtered = $categorySlug === 'tout'
-            ? $all
-            : $all->where('category_slug', $categorySlug)->values();
+        $query = Post::query()
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
 
-        $page = LengthAwarePaginator::resolveCurrentPage();
-        $paginated = new LengthAwarePaginator(
-            $filtered->forPage($page, $perPage)->values(),
-            $filtered->count(),
-            $perPage,
-            $page,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
+        if ($categorySlug !== 'tout') {
+            $query->where('category_slug', $categorySlug);
+        }
+
+        $paginated = $query->orderByDesc('published_at')->paginate($perPage);
+
+        $posts = $paginated->getCollection()->map(fn (Post $post) => $this->postToArray($post))->values()->all();
 
         $lastPage = $paginated->lastPage();
         $currentPage = $paginated->currentPage();
         $basePath = $request->url();
-        $query = $request->query();
+        $queryParams = $request->query();
         $links = [];
         for ($i = 1; $i <= $lastPage; $i++) {
-            $query['page'] = $i;
+            $queryParams['page'] = $i;
             $links[] = [
-                'url' => $basePath . '?' . http_build_query($query),
+                'url' => $basePath . '?' . http_build_query($queryParams),
                 'label' => (string) $i,
                 'active' => $i === $currentPage,
             ];
         }
 
         $nextUrl = $currentPage < $lastPage
-            ? $basePath . '?' . http_build_query(array_merge($query, ['page' => $currentPage + 1]))
+            ? $basePath . '?' . http_build_query(array_merge($request->query(), ['page' => $currentPage + 1]))
             : null;
 
         return Inertia::render('user/blog/index', [
-            'posts' => $paginated->items(),
+            'posts' => $posts,
             'categories' => self::CATEGORIES,
             'currentCategory' => $categorySlug,
             'pagination' => [
@@ -118,19 +109,21 @@ class BlogController extends Controller
     }
 
     /**
-     * Display a single blog post. Uses mock data until a Post model exists.
+     * Display a single blog post.
      */
     public function show(int $id): Response
     {
-        $all = self::mockPosts();
-        $post = collect($all)->firstWhere('id', $id);
+        $post = Post::query()
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->find($id);
 
         if (!$post) {
             abort(404);
         }
 
         return Inertia::render('user/blog/[id]', [
-            'post' => $post,
+            'post' => $this->postToArray($post),
         ]);
     }
 }
