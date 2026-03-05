@@ -28,7 +28,7 @@ export default function BlogPostShow({ post }) {
                     <p className="mt-3 text-sm text-muted-foreground">
                         {published_at} • {author}
                     </p>
-                    <h1 className="mt-2 font-serif text-3xl font-bold text-foreground sm:text-4xl">
+                    <h1 className="mt-2 text-3xl font-bold text-foreground sm:text-4xl">
                         {title}
                     </h1>
                 </div>

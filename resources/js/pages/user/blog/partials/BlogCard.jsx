@@ -27,7 +27,7 @@ export default function BlogCard({ post }) {
                 <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground sm:text-sm">
                     {published_at} • {author}
                 </p>
-                <h2 className="mt-2 line-clamp-2 font-serif text-lg font-bold text-foreground sm:text-xl">
+                <h2 className="mt-2 line-clamp-2 text-lg font-bold text-foreground sm:text-xl">
                     {title}
                 </h2>
                 <p className="mt-2 line-clamp-3 flex-1 text-sm text-muted-foreground">
