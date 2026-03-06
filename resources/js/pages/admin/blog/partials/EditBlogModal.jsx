@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useForm } from '@inertiajs/react';
+import { useForm, router } from '@inertiajs/react';
 import {
     Dialog,
     DialogContent,
@@ -31,6 +31,7 @@ export default function EditBlogModal({ blog, open, onOpenChange }) {
     const initialBody = blog?.body ?? emptyLocale();
 
     const { data, setData, put, processing, errors } = useForm({
+        image: null,
         title: { ...initialTitle },
         slug: { ...initialSlug },
         body: { ...initialBody },
@@ -38,6 +39,7 @@ export default function EditBlogModal({ blog, open, onOpenChange }) {
 
     useEffect(() => {
         if (open && blog) {
+            setData('image', null);
             setData('title', { ...(blog.title ?? emptyLocale()) });
             setData('slug', { ...(blog.slug ?? emptyLocale()) });
             setData('body', { ...(blog.body ?? emptyLocale()) });
@@ -97,9 +99,12 @@ export default function EditBlogModal({ blog, open, onOpenChange }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!blog?.id) return;
-        put(`/admin/blogs/${blog.id}`, {
-            onSuccess: () => onOpenChange(false),
-        });
+        const url = `/admin/blogs/${blog.id}`;
+        if (data.image instanceof File) {
+            router.post(url, { _method: 'PUT', ...data }, { forceFormData: true, onSuccess: () => onOpenChange(false) });
+        } else {
+            put(url, { onSuccess: () => onOpenChange(false) });
+        }
     };
 
     if (!blog) return null;
@@ -111,6 +116,33 @@ export default function EditBlogModal({ blog, open, onOpenChange }) {
                     <DialogTitle>Edit Blog</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    <div className="space-y-2">
+                        <Label>Image</Label>
+                        {blog?.image && (
+                            <div className="mb-2">
+                                <img
+                                    src={blog.image}
+                                    alt=""
+                                    className="h-24 w-auto rounded border border-border object-cover"
+                                />
+                                <p className="mt-1 text-xs text-muted-foreground">Current image</p>
+                            </div>
+                        )}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setData('image', e.target.files?.[0] ?? null)}
+                            className="block w-full text-sm text-muted-foreground file:mr-4 file:rounded-md file:border-0 file:bg-alpha file:px-4 file:py-2 file:text-sm file:font-medium file:text-cl-white file:hover:opacity-90"
+                        />
+                        {errors?.image && (
+                            <p className="text-sm text-destructive">{errors.image}</p>
+                        )}
+                        {data.image && (
+                            <p className="text-xs text-muted-foreground">
+                                New: {data.image.name} ({(data.image.size / 1024).toFixed(1)} KB)
+                            </p>
+                        )}
+                    </div>
                     <div className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
                         {LOCALES.map(({ key, label }) => (
                             <button

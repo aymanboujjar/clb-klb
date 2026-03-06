@@ -25,6 +25,7 @@ export default function CreateBlogModal({ open, onOpenChange }) {
     const [slugManuallyEdited, setSlugManuallyEdited] = useState({ ar: false, fr: false, nl: false });
 
     const { data, setData, post, processing, errors, reset } = useForm({
+        image: null,
         title: emptyLocale(),
         slug: emptyLocale(),
         body: emptyLocale(),
@@ -100,6 +101,25 @@ export default function CreateBlogModal({ open, onOpenChange }) {
                     <DialogTitle>Create Blog</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    {/* Blog image (stored in storage/blogs) */}
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium leading-none">Image</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setData('image', e.target.files?.[0] ?? null)}
+                            className="block w-full text-sm text-muted-foreground file:mr-4 file:rounded-md file:border-0 file:bg-alpha file:px-4 file:py-2 file:text-sm file:font-medium file:text-cl-white file:hover:opacity-90"
+                        />
+                        {errors?.image && (
+                            <p className="text-sm text-destructive">{errors.image}</p>
+                        )}
+                        {data.image && (
+                            <p className="text-xs text-muted-foreground">
+                                {data.image.name} ({(data.image.size / 1024).toFixed(1)} KB)
+                            </p>
+                        )}
+                    </div>
+
                     {/* Simple tab buttons (no Radix Tabs - avoids portal/context issues inside Dialog) */}
                     <div className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
                         {LOCALES.map(({ key, label }) => (
