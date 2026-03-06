@@ -103,7 +103,7 @@ export default function NetworkVideoSection() {
                             alt=""
                             className="absolute inset-0 h-full w-full object-cover opacity-80"
                         />
-                        <span className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full bg-alpha/90 text-cl-white transition hover:bg-alpha">
+                        <span className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full bg-cl-yellow text-cl-black transition hover:bg-cl-yellow/90">
                             <svg className="ml-1 h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M8 5v14l11-7z" />
                             </svg>

@@ -24,37 +24,51 @@ function SocialIcon({ name }) {
 export default function Footer() {
     return (
         <footer className="bg-cl-black text-cl-white">
-            <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
-                <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-                    <div className="max-w-md">
-                        <Link href="/" className="mb-4 inline-flex items-center gap-2">
-                            <img src="/images/logo.webp" alt="CLB KLB" className="h-10 w-10 object-contain" />
-                            <span className="font-semibold text-cl-white">CLB KLB</span>
+            <div className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+                <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+                    <div className="lg:col-span-2">
+                        <Link href="/" className="mb-5 inline-flex items-center gap-3 transition opacity-90 hover:opacity-100">
+                            <img src="/images/logo.webp" alt="CLB KLB" className="h-11 w-11 object-contain" />
+                            <span className="text-xl font-bold tracking-tight text-cl-white">CLB KLB</span>
                         </Link>
-                        <p className="text-sm text-cl-white/90">
+                        <p className="max-w-sm text-sm leading-relaxed text-cl-white/80">
                             Le cercle des lauréats de Belgique, association à but non lucratif régie par la loi du 1er juillet 1901.
                         </p>
                     </div>
-                    <div className="flex gap-4">
-                        {socialLinks.map(({ name, href }) => (
-                            <a
-                                key={name}
-                                href={href}
-                                className="text-cl-white transition hover:opacity-80"
-                                aria-label={name}
-                            >
-                                <SocialIcon name={name} />
-                            </a>
-                        ))}
+                    <div>
+                        <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-cl-white/60">Contact</h3>
+                        <ul className="space-y-2 text-sm text-cl-white/90">
+                            <li>
+                                <a href="tel:+212662501470" className="transition hover:text-alpha">+212 662 50 1470</a>
+                            </li>
+                            <li>
+                                <a href="mailto:contact@clbklp.ma" className="transition hover:text-alpha">contact@clbklp.ma</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-cl-white/60">Réseaux</h3>
+                        <div className="flex gap-3">
+                            {socialLinks.map(({ name, href }) => (
+                                <a
+                                    key={name}
+                                    href={href}
+                                    className="flex h-10 w-10 items-center justify-center rounded-full bg-cl-white/10 text-cl-white transition hover:bg-alpha hover:text-cl-white"
+                                    aria-label={name}
+                                >
+                                    <SocialIcon name={name} />
+                                </a>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="border-t border-white/10">
-                <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-sm text-cl-white/80 sm:flex-row lg:px-8">
-                    <span>© 2023 CLB KLB. Tous droits réservés.</span>
-                    <div className="flex items-center gap-4">
-                        <span>Téléphone: +212 662 50 1470</span>
-                        <a href="mailto:contact@clbklp.ma" className="hover:underline">contact@clbklp.ma</a>
+            <div className="border-t border-cl-white/10">
+                <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 text-sm text-cl-white/60 sm:flex-row lg:px-8">
+                    <span>© {new Date().getFullYear()} CLB KLB. Tous droits réservés.</span>
+                    <div className="flex flex-wrap items-center justify-center gap-4">
+                        <a href="/a-propos" className="transition hover:text-cl-white">À propos</a>
+                        <a href="/contact" className="transition hover:text-cl-white">Contact</a>
                     </div>
                 </div>
             </div>

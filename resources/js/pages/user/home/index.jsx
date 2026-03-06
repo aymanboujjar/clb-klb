@@ -7,13 +7,13 @@ import NetworkVideoSection from './Partials/NetworkVideoSection';
 import TeamSection from './Partials/TeamSection';
 import PartnersSection from './Partials/PartnersSection';
 
-function HomeIndex({ teamMembers = [], partners = [] }) {
+function HomeIndex({ teamMembers = [], partners = [], recentEvents = [] }) {
     return (
         <>
             <AppLayout>
                 <Head title="Accueil" />
                 <HeroSection />
-                <EventsSection />
+                <EventsSection recentEvents={recentEvents} />
                 <StrategicObjectivesSection />
                 <NetworkVideoSection />
                 <TeamSection teamMembers={teamMembers} />

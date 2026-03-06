@@ -49,11 +49,11 @@ export default function Navbar() {
     }
 
     return (
-        <header className="fixed left-0 right-0 top-0 z-50 bg-cl-white">
+        <header className="fixed left-0 right-0 top-0 z-50 border-b border-border/80 bg-cl-white/95 backdrop-blur-md">
             <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:h-20 lg:px-8">
-                <Link href="/" className="flex items-center gap-2">
+                <Link href="/" className="flex items-center gap-3 transition opacity-90 hover:opacity-100">
                     <img src="/images/logo.webp" alt="CLB KLB" className="h-10 w-10 object-contain lg:h-12 lg:w-12" />
-                    <span className="text-lg font-semibold text-cl-black">CLB KLB</span>
+                    <span className="text-lg font-bold tracking-tight text-cl-black lg:text-xl">CLB KLB</span>
                 </Link>
 
                 <ul className="hidden items-center gap-8 md:flex">
@@ -67,7 +67,7 @@ export default function Navbar() {
                                     <button
                                         type="button"
                                         onClick={() => setNewsDropdownOpen((v) => !v)}
-                                        className={`flex items-center gap-1 text-sm font-medium text-cl-black transition hover:opacity-90 ${isActive ? 'underline underline-offset-4' : ''}`}
+                                        className={`flex items-center gap-1 text-sm font-semibold text-cl-black transition hover:text-alpha ${isActive ? 'text-alpha' : ''}`}
                                         aria-expanded={newsDropdownOpen}
                                         aria-haspopup="true"
                                     >
@@ -78,7 +78,7 @@ export default function Navbar() {
                                     </button>
                                     {newsDropdownOpen && (
                                         <ul
-                                            className="absolute start-0 top-full z-50 mt-1 min-w-40 rounded-lg border border-border bg-card py-1 shadow-md"
+                                            className="absolute start-0 top-full z-50 mt-2 min-w-44 rounded-xl border border-border bg-cl-white py-1.5 shadow-lg"
                                             role="menu"
                                         >
                                             {item.items.map(({ key: itemKey, href: itemHref, fr: itemFr, ar: itemAr, nl: itemNl }) => (
@@ -86,7 +86,7 @@ export default function Navbar() {
                                                     <Link
                                                         href={itemHref}
                                                         role="menuitem"
-                                                        className="block px-4 py-2 text-start text-sm text-foreground transition hover:bg-muted"
+                                                        className="block px-4 py-2.5 text-start text-sm font-medium text-foreground transition hover:bg-alpha/5 hover:text-alpha"
                                                         onClick={() => setNewsDropdownOpen(false)}
                                                     >
                                                         <TransText fr={itemFr} ar={itemAr} nl={itemNl} as="span" />
@@ -104,7 +104,7 @@ export default function Navbar() {
                             <li key={key} className="flex items-center gap-1">
                                 <Link
                                     href={href}
-                                    className={`text-sm font-medium text-cl-black transition hover:opacity-90 ${isActive ? 'underline underline-offset-4' : ''}`}
+                                    className={`text-sm font-semibold text-cl-black transition hover:text-alpha ${isActive ? 'text-alpha' : ''}`}
                                 >
                                     <TransText fr={fr} ar={ar} nl={nl} as="span" />
                                 </Link>
@@ -128,7 +128,7 @@ export default function Navbar() {
                             </svg>
                         </button>
                         {open && (
-                            <ul className="absolute end-0 top-full z-50 mt-1 min-w-32 rounded-lg border border-border bg-card py-1 shadow-md">
+                            <ul className="absolute end-0 top-full z-50 mt-2 min-w-36 rounded-xl border border-border bg-cl-white py-1.5 shadow-lg">
                                 {LOCALES.map((l) => (
                                     <li key={l.code}>
                                         <button
@@ -145,7 +145,7 @@ export default function Navbar() {
                     </div>
                     <Link
                         href="#"
-                        className="rounded-lg bg-alpha px-4 py-2 text-sm font-medium uppercase text-cl-white transition hover:opacity-95"
+                        className="rounded-full bg-alpha px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-cl-white shadow-md transition hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
                     >
                         <TransText fr="DEVENIR MEMBRE" ar="كن عضواً" nl="LID WORDEN" as="span" />
                     </Link>

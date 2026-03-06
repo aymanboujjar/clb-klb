@@ -15,7 +15,7 @@ export default function AppSidebarLayout({
             {isAdmin && <AppSidebar />}
             <AppContent variant="sidebar" className="overflow-x-hidden">
                 {isAdmin && <AppSidebarHeader breadcrumbs={breadcrumbs} />}
-                {children}
+                {!isAdmin ? <div className="pt-16 lg:pt-20">{children}</div> : children}
             </AppContent>
         </AppShell>
     );

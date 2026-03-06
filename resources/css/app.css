@@ -9,7 +9,7 @@
 
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
@@ -63,17 +63,19 @@
     /* CLB brand colors (see :root) */
     --color-alpha: var(--color-alpha);
     --color-cl-beta: var(--color-cl-beta);
-    --color-cl-black: var(--color--cl-black);
+    --color-cl-black: var(--color-cl-black);
     --color-cl-white: var(--color-cl-white);
     --color-cl-blue-light: var(--color-cl-blue-light);
+    --color-cl-yellow: var(--color-cl-yellow);
 }
 
 :root {
     --color-alpha: #e81123;
     --color-cl-beta: #a1a3a8;
-    --color--cl-black: #000000;
+    --color-cl-black: #000000;
     --color-cl-white: #ffffff;
     --color-cl-blue-light: #e8f1f8;
+    --color-cl-yellow: #e6a800;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -98,7 +100,9 @@
     --chart-3: oklch(0.398 0.07 227.392);
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
-    --radius: 0.625rem;
+    --radius: 0.75rem;
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+    --shadow-card-hover: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
     --sidebar: oklch(0.985 0 0);
     --sidebar-foreground: oklch(0.145 0 0);
     --sidebar-primary: oklch(0.205 0 0);
@@ -144,6 +148,7 @@
     --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* Infinite loop carousel: use 2 copies of content, translate by -50% */
 @keyframes scroll {
     0% {
         transform: translateX(0);
@@ -153,13 +158,29 @@
     }
 }
 
+/* Carousel track: infinite loop, pauses on hover */
+.carousel-loop {
+    animation: scroll 15s linear infinite;
+}
+.carousel-loop--slow {
+    animation-duration: 25s;
+}
+.group\/carousel:hover .carousel-loop {
+    animation-play-state: paused;
+}
+
 @layer base {
     * {
         @apply border-border;
     }
 
+    html {
+        scroll-behavior: smooth;
+    }
+
     body {
         @apply bg-background text-foreground;
+        font-feature-settings: "ss01", "ss02", "cv01", "cv02";
     }
 
     .tiptap-content h2 {

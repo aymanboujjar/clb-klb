@@ -59,11 +59,11 @@ function MemberCard({ member, showSocial }) {
                     {member.position}
                 </p>
             )}
-            {member.description && (
+            {/* {member.description && (
                 <p className="mt-3 max-w-[300px] mx-auto text-sm leading-relaxed text-muted-foreground">
                     {member.description}
                 </p>
-            )}
+            )} */}
         </div>
     );
 }
@@ -106,7 +106,7 @@ export default function TeamSection({ teamMembers = [] }) {
                     <div className="mt-16 pt-14 border-t border-border">
                         <div className="flex flex-col items-center gap-2">
                             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                                <TransText fr="Membres d'honneur" ar="أعضاء الشرف" nl="Ereleden" as="span" />
+                                <TransText fr={"Membres d'honneur"} ar="أعضاء الشرف" nl="Ereleden" as="span" />
                             </span>
                             <div className="h-px w-12 bg-border" aria-hidden />
                         </div>

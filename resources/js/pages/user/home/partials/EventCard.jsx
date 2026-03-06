@@ -20,7 +20,7 @@ export function FeaturedEventCard({ event }) {
     const tag = pick(event.tag, locale);
 
     return (
-        <article className="overflow-hidden rounded-xl bg-card shadow-md">
+        <article className="overflow-hidden rounded-2xl bg-card shadow-md transition hover:shadow-lg">
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted">
                 {imageUrl && (
                     <img
@@ -34,7 +34,7 @@ export function FeaturedEventCard({ event }) {
                         {subtitle}
                     </span>
                     <h3 className="text-xl font-bold text-cl-white lg:text-2xl">{title}</h3>
-                    <p className="mt-1 text-sm text-cl-white/90">{moderator}</p>
+                    {moderator ? <p className="mt-1 text-sm text-cl-white/90">{moderator}</p> : null}
                 </div>
                 {tag && (
                     <span className="absolute right-4 top-4 rounded bg-alpha px-2 py-1 text-xs font-medium text-cl-white">
@@ -74,7 +74,7 @@ export function SmallEventCard({ event }) {
     return (
         <Link
             href={href}
-            className="flex gap-4 overflow-hidden rounded-lg border border-border bg-card p-4 shadow-sm transition hover:shadow-md"
+            className="flex gap-4 overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm transition hover:border-alpha/20 hover:shadow-md"
         >
             <div className="h-24 w-24 shrink-0 overflow-hidden rounded-lg bg-muted">
                 {imageUrl && (

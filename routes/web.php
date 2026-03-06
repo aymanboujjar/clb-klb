@@ -5,6 +5,7 @@ use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\TeamMemberController;
+use App\Models\Event;
 use App\Models\Partner;
 use App\Models\TeamMember;
 use Illuminate\Support\Facades\Route;
@@ -25,9 +26,32 @@ Route::get('/', function () {
         ]);
     $partners = Partner::orderBy('sort_order')->orderBy('id')->get()
         ->map(fn ($p) => ['id' => $p->id, 'name' => $p->name, 'logoUrl' => $p->logo_path, 'link' => $p->link]);
+
+    $recentEvents = Event::orderBy('date', 'desc')->take(4)->get()->map(function ($e) {
+        $imageUrl = $e->image ? (str_starts_with($e->image, 'http') ? $e->image : asset('storage/' . $e->image)) : null;
+        $dateObj = $e->date ? \Carbon\Carbon::parse($e->date) : null;
+        $dateFormatted = $dateObj ? $dateObj->format('d M') : '';
+        $timeStr = $e->time ? \Carbon\Carbon::parse($e->time)->format('H:i') : '';
+        $timeRangeStr = $dateObj ? $dateObj->format('l, d F Y') . ($timeStr ? ' ' . $timeStr : '') : '';
+        $timeRange = ['fr' => $timeRangeStr, 'ar' => $timeRangeStr, 'nl' => $timeRangeStr];
+        return [
+            'id' => $e->id,
+            'title' => $e->title,
+            'subtitle' => $e->categorie ?? null,
+            'description' => $e->description ?? null,
+            'date' => $dateFormatted,
+            'timeRange' => $timeRange,
+            'location' => $e->location ?? '',
+            'imageUrl' => $imageUrl,
+            'href' => route('events.show', $e),
+            'price' => $e->price,
+        ];
+    });
+
     return Inertia::render('user/home/index', [
         'teamMembers' => $teamMembers,
         'partners' => $partners,
+        'recentEvents' => $recentEvents,
     ]);
 })->name('home');
 
