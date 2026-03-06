@@ -1,11 +1,11 @@
 import { Head } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
-import HeroSection from './Partials/HeroSection';
-import EventsSection from './Partials/EventsSection';
-import StrategicObjectivesSection from './Partials/StrategicObjectivesSection';
-import NetworkVideoSection from './Partials/NetworkVideoSection';
-import TeamSection from './Partials/TeamSection';
-import PartnersSection from './Partials/PartnersSection';
+import HeroSection from './partials/HeroSection';
+import EventsSection from './partials/EventsSection';
+import StrategicObjectivesSection from './partials/StrategicObjectivesSection';
+import NetworkVideoSection from './partials/NetworkVideoSection';
+import TeamSection from './partials/TeamSection';
+import PartnersSection from './partials/PartnersSection';
 
 function HomeIndex() {
     return (
