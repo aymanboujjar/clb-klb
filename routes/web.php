@@ -14,7 +14,15 @@ Route::post('/locale', [LocaleController::class, 'store']);
 
 Route::get('/', function () {
     $teamMembers = TeamMember::orderBy('sort_order')->orderBy('id')->get()
-        ->map(fn ($m) => ['id' => $m->id, 'name' => $m->name, 'imageUrl' => $m->image_path, 'show_social' => $m->show_social]);
+        ->map(fn ($m) => [
+            'id' => $m->id,
+            'name' => $m->name,
+            'category' => $m->category,
+            'image_path' => $m->image_path,
+            'position' => $m->position,
+            'description' => $m->description,
+            'show_social' => $m->show_social,
+        ]);
     $partners = Partner::orderBy('sort_order')->orderBy('id')->get()
         ->map(fn ($p) => ['id' => $p->id, 'name' => $p->name, 'logoUrl' => $p->logo_path, 'link' => $p->link]);
     return Inertia::render('user/home/index', [
@@ -25,7 +33,15 @@ Route::get('/', function () {
 
 Route::get('/a-propos', function () {
     $teamMembers = TeamMember::orderBy('sort_order')->orderBy('id')->get()
-        ->map(fn ($m) => ['id' => $m->id, 'name' => $m->name, 'imageUrl' => $m->image_path, 'show_social' => $m->show_social]);
+        ->map(fn ($m) => [
+            'id' => $m->id,
+            'name' => $m->name,
+            'category' => $m->category,
+            'image_path' => $m->image_path,
+            'position' => $m->position,
+            'description' => $m->description,
+            'show_social' => $m->show_social,
+        ]);
     $partners = Partner::orderBy('sort_order')->orderBy('id')->get()
         ->map(fn ($p) => ['id' => $p->id, 'name' => $p->name, 'logoUrl' => $p->logo_path, 'link' => $p->link]);
     return Inertia::render('user/about/index', [
