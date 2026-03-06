@@ -3,16 +3,22 @@ import TransText from '@/components/TransText';
 
 export default function HeroSection() {
     return (
-        <section className="relative flex min-h-[85vh] items-center justify-center bg-cl-black px-4 py-24">
+        <section className="relative flex min-h-[62.5vh] items-center justify-center bg-cl-black/75 px-4 py-24">
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
                 style={{
-                    backgroundImage: 'url(https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1920&q=80)',
+                    backgroundImage: `url(/assets/hero-bg.webp)`,
                 }}
             />
-            <div className="absolute inset-0 bg-cl-black/60" />
+            <div
+                className="absolute inset-0"
+                style={{
+                    background:
+                        'linear-gradient(to right, rgba(32, 18, 19, 0.625) 0%, rgba(32, 18, 19, 0.75) 50%, rgba(32, 18, 19, 0.625) 100%)',
+                }}
+            />
             <div className="relative z-10 mx-auto max-w-4xl text-center">
-                <h1 className="mb-6 text-3xl font-bold uppercase leading-tight text-cl-white sm:text-4xl lg:text-5xl xl:text-6xl">
+                <h1 className="mb-6 text-3xl leading-tight font-bold text-cl-white uppercase sm:text-4xl lg:text-5xl xl:text-6xl">
                     <TransText
                         fr="Le cercle des lauréats de Belgique"
                         ar="دائرة خريجي بلجيكا"
@@ -30,16 +36,24 @@ export default function HeroSection() {
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-4">
                     <Link
-                        href="#"
-                        className="rounded-lg bg-alpha px-6 py-3 text-sm font-medium text-cl-white transition hover:opacity-95"
+                        href="/a-propos"
+                        className="rounded-full bg-alpha px-12 py-4 text-sm font-semibold text-cl-white transition hover:bg-alpha/85"
                     >
-                        <TransText fr="EN SAVOIR PLUS" ar="اعرف المزيد" nl="MEER WETEN" as="span" />
+                        <TransText
+                            fr="EN SAVOIR PLUS"
+                            ar="اعرف المزيد"
+                            nl="MEER WETEN"
+                        />
                     </Link>
                     <Link
-                        href="/a-propos"
-                        className="rounded-lg border border-cl-white bg-cl-black px-6 py-3 text-sm font-medium text-cl-white transition hover:bg-cl-white/10"
+                        href="/contact"
+                        className="rounded-full border border-cl-white px-12 py-4 text-sm font-semibold text-cl-white uppercase transition hover:bg-cl-white/5"
                     >
-                        <TransText fr="ADHERER AU CLUB" ar="انضم إلى النادي" nl="LID WORDEN VAN DE CLUB" as="span" />
+                        <TransText
+                            fr="contactez-nous"
+                            ar="اتصل بنا"
+                            nl="CONTACTEER ONS"
+                        />
                     </Link>
                 </div>
             </div>
