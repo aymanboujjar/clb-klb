@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\User\LocaleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth', 'role:admin', 'verified'], function () {
 
 
 
+require __DIR__ . '/user/blogs.php';
 require __DIR__ . '/blog.php';
 require __DIR__ . '/contact.php';
 require __DIR__ . '/settings.php';
