@@ -33,8 +33,8 @@ class TeamMemberController extends Controller
             'show_social' => 'boolean',
         ]);
 
-        $path = $request->file('image')->store('team', 'public');
-        $validated['image_path'] = '/storage/' . $path;
+        $path = $request->file('image')->store('images/team', 'public');
+        $validated['image_path'] = $path;
         $validated['sort_order'] = (int) ($validated['sort_order'] ?? TeamMember::max('sort_order') + 1);
         $validated['show_social'] = (bool) ($request->boolean('show_social'));
         unset($validated['image']);
@@ -62,12 +62,12 @@ class TeamMemberController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $oldPath = str_replace('/storage/', '', $teamMember->image_path);
+            $oldPath = $teamMember->image_path_storage;
             if ($oldPath && Storage::disk('public')->exists($oldPath)) {
                 Storage::disk('public')->delete($oldPath);
             }
-            $path = $request->file('image')->store('team', 'public');
-            $validated['image_path'] = '/storage/' . $path;
+            $path = $request->file('image')->store('images/team', 'public');
+            $validated['image_path'] = $path;
         }
         unset($validated['image']);
         if (array_key_exists('sort_order', $validated)) {
@@ -82,7 +82,7 @@ class TeamMemberController extends Controller
 
     public function destroy(TeamMember $teamMember)
     {
-        $path = str_replace('/storage/', '', $teamMember->image_path);
+        $path = $teamMember->image_path_storage;
         if ($path && Storage::disk('public')->exists($path)) {
             Storage::disk('public')->delete($path);
         }

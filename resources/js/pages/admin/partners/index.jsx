@@ -78,7 +78,7 @@ export default function AdminPartnersIndex({ partners }) {
                                         <tr key={partner.id} className="transition-colors hover:bg-muted/20">
                                             <td className="px-4 py-3 sm:px-6">
                                                 <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted/50 p-1">
-                                                    <img src={partner.logo_path} alt="" className="max-h-full max-w-full object-contain" />
+                                                    <img src={partner.logo_url ?? partner.logo_path} alt="" className="max-h-full max-w-full object-contain" />
                                                 </div>
                                             </td>
                                             <td className="px-4 py-3 font-medium text-foreground sm:px-6">{partner.name}</td>

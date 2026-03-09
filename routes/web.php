@@ -20,12 +20,13 @@ Route::get('/', function () {
             'name' => $m->name,
             'category' => $m->category,
             'image_path' => $m->image_path,
+            'imageUrl' => $m->image_url,
             'position' => $m->position,
             'description' => $m->description,
             'show_social' => $m->show_social,
         ]);
     $partners = Partner::orderBy('sort_order')->orderBy('id')->get()
-        ->map(fn ($p) => ['id' => $p->id, 'name' => $p->name, 'logoUrl' => $p->logo_path, 'link' => $p->link]);
+        ->map(fn ($p) => ['id' => $p->id, 'name' => $p->name, 'logoUrl' => $p->logo_url, 'link' => $p->link]);
 
     $recentEvents = Event::orderBy('date', 'desc')->take(4)->get()->map(function ($e) {
         $imageUrl = $e->image ? (str_starts_with($e->image, 'http') ? $e->image : asset('storage/' . $e->image)) : null;
@@ -62,12 +63,13 @@ Route::get('/a-propos', function () {
             'name' => $m->name,
             'category' => $m->category,
             'image_path' => $m->image_path,
+            'imageUrl' => $m->image_url,
             'position' => $m->position,
             'description' => $m->description,
             'show_social' => $m->show_social,
         ]);
     $partners = Partner::orderBy('sort_order')->orderBy('id')->get()
-        ->map(fn ($p) => ['id' => $p->id, 'name' => $p->name, 'logoUrl' => $p->logo_path, 'link' => $p->link]);
+        ->map(fn ($p) => ['id' => $p->id, 'name' => $p->name, 'logoUrl' => $p->logo_url, 'link' => $p->link]);
     return Inertia::render('user/about/index', [
         'teamMembers' => $teamMembers,
         'partners' => $partners,

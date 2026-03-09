@@ -32,8 +32,8 @@ class PartnerController extends Controller
             'sort_order' => 'nullable|integer|min:0',
         ]);
 
-        $path = $request->file('logo')->store('partners', 'public');
-        $validated['logo_path'] = '/storage/' . $path;
+        $path = $request->file('logo')->store('images/partners', 'public');
+        $validated['logo_path'] = $path;
         $validated['sort_order'] = (int) ($validated['sort_order'] ?? Partner::max('sort_order') + 1);
         unset($validated['logo']);
 
@@ -59,12 +59,12 @@ class PartnerController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $oldPath = str_replace('/storage/', '', $partner->logo_path);
+            $oldPath = $partner->logo_path_storage;
             if ($oldPath && Storage::disk('public')->exists($oldPath)) {
                 Storage::disk('public')->delete($oldPath);
             }
-            $path = $request->file('logo')->store('partners', 'public');
-            $validated['logo_path'] = '/storage/' . $path;
+            $path = $request->file('logo')->store('images/partners', 'public');
+            $validated['logo_path'] = $path;
         }
         unset($validated['logo']);
         if (array_key_exists('sort_order', $validated)) {
@@ -78,7 +78,7 @@ class PartnerController extends Controller
 
     public function destroy(Partner $partner)
     {
-        $path = str_replace('/storage/', '', $partner->logo_path);
+        $path = $partner->logo_path_storage;
         if ($path && Storage::disk('public')->exists($path)) {
             Storage::disk('public')->delete($path);
         }

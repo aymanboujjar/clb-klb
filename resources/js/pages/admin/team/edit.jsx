@@ -49,7 +49,7 @@ export default function AdminTeamEdit({ teamMember }) {
                         <CardContent className="space-y-5">
                             <div className="flex items-center gap-4">
                                 <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-border bg-muted">
-                                    <img src={teamMember.image_path} alt="" className="h-full w-full object-cover" />
+                                    <img src={teamMember.image_url ?? teamMember.image_path} alt="" className="h-full w-full object-cover" />
                                 </div>
                                 <p className="text-sm text-muted-foreground">Current photo. Upload a new file below to replace.</p>
                             </div>

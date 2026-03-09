@@ -47,7 +47,7 @@ export default function AdminPartnersEdit({ partner }) {
                         <CardContent className="space-y-5">
                             <div className="flex items-center gap-4">
                                 <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted/50 p-1">
-                                    <img src={partner.logo_path} alt="" className="max-h-full max-w-full object-contain" />
+                                    <img src={partner.logo_url ?? partner.logo_path} alt="" className="max-h-full max-w-full object-contain" />
                                 </div>
                                 <p className="text-sm text-muted-foreground">Current logo. Upload a new file to replace.</p>
                             </div>

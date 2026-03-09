@@ -78,7 +78,7 @@ export default function AdminTeamIndex({ teamMembers }) {
                                         <tr key={member.id} className="transition-colors hover:bg-muted/20">
                                             <td className="px-4 py-3 sm:px-6">
                                                 <div className="h-12 w-12 overflow-hidden rounded-xl border border-border bg-muted">
-                                                    <img src={member.image_path} alt="" className="h-full w-full object-cover" />
+                                                    <img src={member.image_url ?? member.image_path} alt="" className="h-full w-full object-cover" />
                                                 </div>
                                             </td>
                                             <td className="px-4 py-3 font-medium text-foreground sm:px-6">{member.name}</td>

@@ -4,9 +4,26 @@ namespace Database\Seeders;
 
 use App\Models\Partner;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class PartnerSeeder extends Seeder
 {
+    /**
+     * Copy public image to Storage and return relative path (partners/xxx).
+     */
+    private function copyToStorage(string $publicPath): string
+    {
+        $relative = ltrim($publicPath, '/'); // images/partners/xxx.png
+        $fullPath = public_path($relative);
+        if (!File::isFile($fullPath)) {
+            return $publicPath;
+        }
+        $storageRelative = 'images/partners/' . basename($fullPath);
+        Storage::disk('public')->put($storageRelative, File::get($fullPath));
+        return $storageRelative;
+    }
+
     public function run(): void
     {
         Partner::query()->delete();
@@ -36,9 +53,10 @@ class PartnerSeeder extends Seeder
         ];
 
         foreach ($partners as $index => $data) {
+            $logoPath = $this->copyToStorage($data['logo_path']);
             Partner::create([
                 'name' => $data['name'],
-                'logo_path' => $data['logo_path'],
+                'logo_path' => $logoPath,
                 'link' => $data['link'],
                 'sort_order' => $index,
             ]);

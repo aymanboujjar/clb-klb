@@ -4,9 +4,29 @@ namespace Database\Seeders;
 
 use App\Models\TeamMember;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class TeamMemberSeeder extends Seeder
 {
+    /**
+     * Copy public image to Storage and return relative path, or null.
+     */
+    private function copyToStorage(?string $publicPath): ?string
+    {
+        if (!$publicPath || !str_starts_with($publicPath, '/images/')) {
+            return $publicPath ?: null;
+        }
+        $relative = ltrim($publicPath, '/'); // images/team/xxx.jpg
+        $fullPath = public_path($relative);
+        if (!File::isFile($fullPath)) {
+            return null;
+        }
+        $storageRelative = 'images/team/' . basename($fullPath);
+        Storage::disk('public')->put($storageRelative, File::get($fullPath));
+        return $storageRelative;
+    }
+
     public function run(): void
     {
         TeamMember::query()->delete();
@@ -126,6 +146,8 @@ class TeamMemberSeeder extends Seeder
         ];
 
         foreach (array_merge($bureau, $honorary) as $member) {
+            $imagePath = $this->copyToStorage($member['image_path'] ?? null);
+            $member['image_path'] = $imagePath;
             TeamMember::create($member);
         }
     }
