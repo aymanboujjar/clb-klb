@@ -79,7 +79,7 @@ const smallEvents = [
 
 export default function EventsSection() {
     return (
-        <section className="border-b border-border bg-background py-16 lg:py-24">
+        <section className="border-b border-border bg-cl-blue-light/30 py-16 lg:py-24">
             <div className="mx-auto max-w-7xl px-4 lg:px-8">
                 <p className="text-center text-xs font-medium tracking-wider text-alpha uppercase">
                     <TransText
@@ -95,6 +95,7 @@ export default function EventsSection() {
                         nl="Recente evenementen"
                     />
                 </h2>
+                <div className="mx-auto mt-4 h-0.5 w-16 rounded-full bg-alpha" />
                 <div className="mt-12 grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">
                         <FeaturedEventCard event={featuredEvent} />
@@ -105,10 +106,10 @@ export default function EventsSection() {
                         ))}
                     </div>
                 </div>
-                <div className="mt-10 text-center">
+                <div className="mt-12 text-center">
                     <Link
-                        href="#"
-                        className="inline-flex items-center gap-2 text-base font-medium text-alpha hover:underline"
+                        href="/blogs"
+                        className="inline-flex items-center gap-2 rounded-lg border-2 border-alpha bg-transparent px-6 py-3 text-sm font-semibold uppercase tracking-wide text-alpha transition hover:bg-alpha hover:text-cl-white focus:outline-none focus:ring-2 focus:ring-alpha focus:ring-offset-2"
                     >
                         <TransText
                             fr="VOIR TOUT L'AGENDA"

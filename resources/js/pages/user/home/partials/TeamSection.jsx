@@ -1,4 +1,14 @@
+import { usePage } from '@inertiajs/react';
 import TransText from '@/components/TransText';
+
+const LOCALES = ['fr', 'ar', 'nl'];
+const DEFAULT = 'fr';
+
+function pick(obj, locale) {
+    if (obj == null || typeof obj !== 'object') return obj;
+    const loc = LOCALES.includes(locale) ? locale : DEFAULT;
+    return obj[loc] ?? obj.fr ?? obj.ar ?? obj.nl ?? '';
+}
 
 const team = [
     {
@@ -49,6 +59,9 @@ const team = [
 ];
 
 export default function TeamSection() {
+    const { props } = usePage();
+    const locale = props.locale && LOCALES.includes(props.locale) ? props.locale : DEFAULT;
+
     return (
         <section className="border-b border-border bg-background py-16 lg:py-24">
             <div className="mx-auto max-w-7xl px-4 lg:px-8">

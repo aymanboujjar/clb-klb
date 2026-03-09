@@ -66,8 +66,9 @@ export default function NetworkVideoSection() {
     const videoTitleText = pick(videoTitle, locale);
 
     return (
-        <section className="bg-cl-black py-16 lg:py-24">
-            <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-2 lg:gap-16 lg:px-8">
+        <section className="relative overflow-hidden bg-cl-black py-16 lg:py-24">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(232,17,35,0.12),transparent)]" />
+            <div className="relative mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-2 lg:gap-16 lg:px-8">
                 <div className="flex flex-col justify-center">
                     <p className="text-xs font-medium tracking-wider text-alpha uppercase">
                         <TransText
@@ -76,7 +77,7 @@ export default function NetworkVideoSection() {
                             nl="Over ons"
                         />
                     </p>
-                    <h2 className="mt-2 text-3xl font-bold text-cl-white lg:text-4xl">
+                    <h2 className="mt-3 text-3xl font-bold tracking-tight text-cl-white lg:text-4xl">
                         {slideTitle}
                     </h2>
                     <p className="mt-4 text-muted">{slideBody}</p>
@@ -109,25 +110,45 @@ export default function NetworkVideoSection() {
                     {/* <div className="mt-8 flex items-center gap-2 text-sm text-cl-white/70">
                         <button
                             type="button"
-                            onClick={() => setCurrentSlide((s) => (s === 0 ? totalSlides - 1 : s - 1))}
-                            className="rounded p-1 transition hover:bg-white/10"
-                            aria-label={locale === 'fr' ? 'Slide précédent' : locale === 'ar' ? 'الشريحة السابقة' : 'Vorige slide'}
+                            onClick={() =>
+                                setCurrentSlide((s) =>
+                                    s === 0 ? totalSlides - 1 : s - 1,
+                                )
+                            }
+                            className="flex h-10 w-10 items-center justify-center rounded-full border border-cl-white/30 text-cl-white transition hover:border-alpha hover:bg-alpha/20"
+                            aria-label={
+                                locale === 'fr'
+                                    ? 'Slide précédent'
+                                    : locale === 'ar'
+                                      ? 'الشريحة السابقة'
+                                      : 'Vorige slide'
+                            }
                         >
-                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
-                        <span>
-                            {currentSlide + 1} sur {totalSlides}
+                        <span className="min-w-[4rem] text-center text-sm font-medium text-cl-white/80">
+                            {currentSlide + 1} / {totalSlides}
                         </span>
                         <button
                             type="button"
-                            onClick={() => setCurrentSlide((s) => (s === totalSlides - 1 ? 0 : s + 1))}
-                            className="rounded p-1 transition hover:bg-white/10"
-                            aria-label={locale === 'fr' ? 'Slide suivant' : locale === 'ar' ? 'الشريحة التالية' : 'Volgende slide'}
+                            onClick={() =>
+                                setCurrentSlide((s) =>
+                                    s === totalSlides - 1 ? 0 : s + 1,
+                                )
+                            }
+                            className="flex h-10 w-10 items-center justify-center rounded-full border border-cl-white/30 text-cl-white transition hover:border-alpha hover:bg-alpha/20"
+                            aria-label={
+                                locale === 'fr'
+                                    ? 'Slide suivant'
+                                    : locale === 'ar'
+                                      ? 'الشريحة التالية'
+                                      : 'Volgende slide'
+                            }
                         >
-                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
                     </div> */}

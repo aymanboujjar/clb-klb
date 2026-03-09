@@ -68,7 +68,7 @@ const objectives = [
 
 export default function StrategicObjectivesSection() {
     return (
-        <section className="border-b border-border bg-background py-16 lg:py-24">
+        <section id="objectifs" className="scroll-mt-20 border-b border-border bg-background py-16 lg:py-24">
             <div className="mx-auto max-w-7xl px-4 lg:px-8">
                 <p className="text-center text-xs font-medium tracking-wider text-alpha uppercase">
                     <TransText
@@ -84,6 +84,7 @@ export default function StrategicObjectivesSection() {
                         nl="Onze strategische doelstellingen"
                     />
                 </h2>
+                <div className="mx-auto mt-4 h-0.5 w-16 rounded-full bg-alpha" />
                 <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {objectives.map((obj, i) => (
                         <ObjectiveBlock key={i} {...obj} />
