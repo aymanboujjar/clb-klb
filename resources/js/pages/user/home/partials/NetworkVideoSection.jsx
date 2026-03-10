@@ -2,11 +2,11 @@ import { Link } from '@inertiajs/react';
 import { TransText } from '@/components';
 import { CONTACT_INFO } from '@/lib/consts';
 
-export default function NetworkVideoSection() {
+export function NetworkVideoSection() {
     return (
         <section className="relative overflow-hidden bg-cl-black py-16 lg:py-24">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(232,17,35,0.12),transparent)]" />
-            <div className="relative mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-2 lg:gap-16 lg:px-8">
+            <div className="relative container grid gap-12 lg:grid-cols-2 lg:gap-16">
                 <div className="flex flex-col justify-center">
                     <TransText
                         fr="À propos de nous"
@@ -63,12 +63,13 @@ export default function NetworkVideoSection() {
                     className="aspect-video w-full"
                     src="https://www.youtube.com/embed/fdojEYgJuyE?si=JIhYM8UjExGMiRgz"
                     title="YouTube video player"
-                    frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
                 ></iframe>
             </div>
         </section>
     );
 }
+
+export default NetworkVideoSection;

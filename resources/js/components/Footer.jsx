@@ -77,7 +77,7 @@ const socialLinks = [
 export default function Footer() {
     return (
         <footer className="bg-cl-black text-cl-white">
-            <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+            <div className="container py-12">
                 <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
                     <div className="max-w-md">
                         <Link
@@ -118,7 +118,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="border-t border-white/10">
-                <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-sm text-cl-white/80 sm:flex-row lg:px-8">
+                <div className="container flex flex-col items-center justify-between gap-2 px-4 py-4 text-sm text-cl-white/80 sm:flex-row">
                     <TransText
                         ar="© 2026 CLB KLP. جميع الحقوق محفوظة."
                         fr="© 2026 CLB KLP. Tous droits réservés."

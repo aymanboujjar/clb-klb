@@ -1,7 +1,6 @@
 import { Head } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
-import PageHero from '@/components/PageHero';
-import TransText from '@/components/TransText';
+import { PageHero, TransText } from '@/components';
 import BlogCard from './partials/BlogCard';
 import Pagination from './partials/Pagination';
 
@@ -14,14 +13,12 @@ export default function BlogIndex({ blogs = [], pagination }) {
         <>
             <Head title="Blog - Cercle des Lauréats de Belgique" />
             <PageHero
-                subtitle={<TransText fr="Actualité" ar="الأخبار" nl="Nieuws" />}
-                title={
-                    <TransText
-                        fr="Bienvenue sur le blog du Cercle des Lauréats de Belgique"
-                        ar="مرحباً بكم في مدونة دائرة خريجي بلجيكا"
-                        nl="Welkom op de blog van de Cercle des Lauréats de Belgique"
-                    />
-                }
+                subtitle={{ fr: 'Actualité', ar: 'الأخبار', nl: 'Nieuws' }}
+                title={{
+                    fr: 'Bienvenue sur le blog du Cercle des Lauréats de Belgique',
+                    ar: 'مرحباً بكم في مدونة دائرة خريجي بلجيكا',
+                    nl: 'Welkom op de blog van de Cercle des Lauréats de Belgique',
+                }}
             />
             <TransText
                 as="p"
@@ -32,13 +29,13 @@ export default function BlogIndex({ blogs = [], pagination }) {
             />
             <div className="mx-auto max-w-6xl px-4 pb-8">
                 {blogs.length === 0 ? (
-                    <p className="py-12 text-center text-muted-foreground">
-                        <TransText
-                            fr="Aucun article pour le moment."
-                            ar="لا توجد مقالات حالياً."
-                            nl="Nog geen artikelen."
-                        />
-                    </p>
+                    <TransText
+                        fr="Aucun article pour le moment."
+                        ar="لا توجد مقالات حالياً."
+                        nl="Nog geen artikelen."
+                        as="p"
+                        className="py-12 text-center text-muted-foreground"
+                    />
                 ) : (
                     <>
                         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

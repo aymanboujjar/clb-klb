@@ -40,8 +40,8 @@ const contactCards = [
 
 export default function ContactHeroSection() {
     return (
-        <section className="border-b border-border bg-muted/40 px-4 py-20 lg:px-6 lg:py-28">
-            <div className="mx-auto max-w-6xl">
+        <section className="border-b border-border bg-muted/40 py-20 lg:py-28">
+            <div className="container">
                 <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
                     <TransText
                         fr="Ne cherchez pas sur Google, demandez-nous"
