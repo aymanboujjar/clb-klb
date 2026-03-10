@@ -63,6 +63,10 @@ class BlogController extends Controller
             ? $basePath . '?page=' . ($currentPage + 1)
             : null;
 
+        $prevUrl = $currentPage > 1
+            ? $basePath . ($currentPage - 1 === 1 ? '' : '?page=' . ($currentPage - 1))
+            : null;
+
         return Inertia::render('user/blog/index', [
             'blogs' => $blogs,
             'pagination' => [
@@ -71,6 +75,7 @@ class BlogController extends Controller
                 'per_page' => $paginated->perPage(),
                 'total' => $paginated->total(),
                 'links' => $links,
+                'prev_url' => $prevUrl,
                 'next_url' => $nextUrl,
             ],
         ]);
